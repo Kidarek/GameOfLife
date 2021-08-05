@@ -14,10 +14,9 @@ import {
 import HelpIcon from "@material-ui/icons/Help"
 
 import Square from "./Square"
-import { RootState, store } from "../store"
-import { useSelector, useDispatch } from "react-redux"
-import { CellDiff, reset, step } from "../lifeSlice"
-import { createSelector } from "@reduxjs/toolkit"
+import { store } from "../store"
+import { useDispatch } from "react-redux"
+import { CellDiff, reset, step, randomizer } from "../lifeSlice"
 
 const marks = [
     {
@@ -124,17 +123,11 @@ function Board(): JSX.Element {
     }
 
     const clearBoard = (): void => {
-        // setSquares(
-        //     Array.from({ length: size }, () => {
-        //         return Array.from({ length: size }, () => 0)
-        //     })
-        // )
+        dispatch(reset(size))
     }
 
     const fillRandom = (): void => {
-        // setSquares(
-        //     squares.map((row, rowIdx) => row.map((col, colIdx) => (getRandomInt(101) < randomFillPercent ? 1 : 0)))
-        // )
+        dispatch(randomizer(randomFillPercent))
     }
 
     return (
@@ -198,14 +191,6 @@ function Board(): JSX.Element {
     )
 }
 
-function deepCopy<T>(arr: T[][]): T[][] {
-    const newArr: T[][] = []
-    arr.forEach((arr) => {
-        newArr.push(arr.slice())
-    })
-    return newArr
-}
-
 export const useInterval = (callback: any, delay: number | null): void => {
     const savedCallback = useRef<any>()
 
@@ -230,6 +215,3 @@ export const useInterval = (callback: any, delay: number | null): void => {
 
 export default Board
 
-function getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max)
-}

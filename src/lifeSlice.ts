@@ -40,10 +40,18 @@ export const lifeSlice = createSlice({
             action.payload.forEach((change) => {
                 state.value[change.y][change.x] = change.state
             })
+        },
+        randomizer: (state, action: PayloadAction<number>) => {
+          state.value = state.value.map((row, rowIdx) => row.map((col, colIdx) => (getRandomInt(101) < action.payload ? 1 : 0)))
         }
     }
 })
 
-export const { reset, alive, dead, step } = lifeSlice.actions
+function getRandomInt(max: number): number {
+  return Math.floor(Math.random() * max)
+}
+
+
+export const { reset, alive, dead, step, randomizer } = lifeSlice.actions
 
 export default lifeSlice.reducer
