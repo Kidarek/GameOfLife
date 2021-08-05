@@ -1,10 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { lifeSlice } from './lifeSlice'
+import { configureStore } from "@reduxjs/toolkit"
+import { lifeSlice } from "./lifeSlice"
 
 export const store = configureStore({
-  reducer: {
-      life: lifeSlice.reducer
-  },
+    reducer: {
+        life: lifeSlice.reducer
+    }
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

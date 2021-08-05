@@ -1,13 +1,13 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export interface LifeState {
-  value: number[][]
+    value: number[][]
 }
 
 const initialState: LifeState = {
-  value: Array.from({ length: 10 }, () => {
-    return Array.from({ length: 10 }, () => 0)
-}),
+    value: Array.from({ length: 10 }, () => {
+        return Array.from({ length: 10 }, () => 0)
+    })
 }
 
 interface Coord {
@@ -22,26 +22,26 @@ export interface CellDiff {
 }
 
 export const lifeSlice = createSlice({
-  name: 'life',
-  initialState,
-  reducers: {
-      reset: (state, action: PayloadAction<number>) => {
-        state.value = Array.from({ length: action.payload }, () => {
-            return Array.from({ length: action.payload }, () => 0)
-        })
-      },
-    alive: (state, action: PayloadAction<Coord>) => {
-        state.value[action.payload.y][action.payload.x] = 1
-    },
-    dead: (state, action: PayloadAction<Coord>) => {
-        state.value[action.payload.y][action.payload.x] = 0
-    },
-    step: (state, action: PayloadAction<CellDiff[]>) => {
-        action.payload.forEach((change) => {
-            state.value[change.y][change.x] = change.state
-        })
+    name: "life",
+    initialState,
+    reducers: {
+        reset: (state, action: PayloadAction<number>) => {
+            state.value = Array.from({ length: action.payload }, () => {
+                return Array.from({ length: action.payload }, () => 0)
+            })
+        },
+        alive: (state, action: PayloadAction<Coord>) => {
+            state.value[action.payload.y][action.payload.x] = 1
+        },
+        dead: (state, action: PayloadAction<Coord>) => {
+            state.value[action.payload.y][action.payload.x] = 0
+        },
+        step: (state, action: PayloadAction<CellDiff[]>) => {
+            action.payload.forEach((change) => {
+                state.value[change.y][change.x] = change.state
+            })
+        }
     }
-  },
 })
 
 export const { reset, alive, dead, step } = lifeSlice.actions

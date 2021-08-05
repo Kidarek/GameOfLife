@@ -15,7 +15,7 @@ import HelpIcon from "@material-ui/icons/Help"
 
 import Square from "./Square"
 import { RootState, store } from "../store"
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux"
 import { CellDiff, reset, step } from "../lifeSlice"
 import { createSelector } from "@reduxjs/toolkit"
 
@@ -35,7 +35,11 @@ function Board(): JSX.Element {
     const [isPlaying, setPlaying] = useState(false)
     const [playTime, setPlayTime] = useState(200)
     const [randomFillPercent, setRandomFillPercent] = useState(50)
-    const [dummyArr, setDummyArr] = useState(Array.from({ length: size }, () => { return 0 }))
+    const [dummyArr, setDummyArr] = useState(
+        Array.from({ length: size }, () => {
+            return 0
+        })
+    )
     const dispatch = useDispatch()
 
     useInterval(
@@ -48,7 +52,11 @@ function Board(): JSX.Element {
 
     useEffect(() => {
         setPlaying(false)
-        setDummyArr(Array.from({ length: size }, () => { return 0 }))
+        setDummyArr(
+            Array.from({ length: size }, () => {
+                return 0
+            })
+        )
         dispatch(reset(size))
     }, [size])
 
@@ -65,10 +73,10 @@ function Board(): JSX.Element {
                 if (square === 1 && [2, 3].includes(aliveNeighbors)) {
                     // Don't do anything here
                 } else if (square === 0 && aliveNeighbors === 3) {
-                    diff.push({x: colIdx, y: rowIdx, state: 1})
+                    diff.push({ x: colIdx, y: rowIdx, state: 1 })
                     changed = true
                 } else if (squares[rowIdx][colIdx] === 1) {
-                    diff.push({x: colIdx, y: rowIdx, state: 0})
+                    diff.push({ x: colIdx, y: rowIdx, state: 0 })
                     changed = true
                 }
             })
@@ -178,11 +186,13 @@ function Board(): JSX.Element {
                     marks={marks}></Slider>
             </Box>
             <Grid container id="board" spacing={0} columns={{ xs: size }} sx={{ width: 34 * size }}>
-                {dummyArr.map((row, rowIdx) => dummyArr.map((col, colIdx) => (
-                    <Grid item xs={1} key={`${rowIdx}:${colIdx}`}>
-                        <Square x={colIdx} y={rowIdx} />
-                    </Grid>
-                )))}
+                {dummyArr.map((row, rowIdx) =>
+                    dummyArr.map((col, colIdx) => (
+                        <Grid item xs={1} key={`${rowIdx}:${colIdx}`}>
+                            <Square x={colIdx} y={rowIdx} />
+                        </Grid>
+                    ))
+                )}
             </Grid>
         </Box>
     )

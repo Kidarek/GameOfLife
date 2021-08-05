@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom"
-import { store } from './store'
-import { Provider } from 'react-redux'
+import { store } from "./store"
+import { Provider } from "react-redux"
 import "./index.css"
-import Game from './components/Game'
+import Game from "./components/Game"
 
 import {
     ThemeProvider,
@@ -17,7 +17,6 @@ const darkTheme = createTheme({
     }
 })
 
-
 // ========================================
 ReactDOM.render(
     <ThemeProvider theme={darkTheme}>
@@ -28,4 +27,3 @@ ReactDOM.render(
     </ThemeProvider>,
     document.getElementById("root")
 )
-
