@@ -12,22 +12,15 @@ import {
     InputAdornment
 } from "@material-ui/core"
 import HelpIcon from "@material-ui/icons/Help"
+import { ArrowForward, PlayArrow, Stop } from "@material-ui/icons"
 
 import Square from "./Square"
+import SimpleMenu from "./Menu"
 import { store } from "../store"
 import { useDispatch } from "react-redux"
 import { CellDiff, reset, step, randomizer } from "../lifeSlice"
 
-const marks = [
-    {
-        value: 50,
-        label: "50ms"
-    },
-    {
-        value: 1000,
-        label: "1s"
-    }
-]
+
 
 function Board(): JSX.Element {
     const [size, setSize] = useState(10)
@@ -144,39 +137,29 @@ function Board(): JSX.Element {
             </Stack>
 
             <Stack direction="row" spacing={2}>
-                <Button onClick={play}>Progress</Button>
-                <Button onClick={() => setPlaying(true)}>Start</Button>
-                <Button onClick={() => setPlaying(false)}>Stop</Button>
-                <Button onClick={() => clearBoard()}>Clear</Button>
-                <TextField
-                    label="Board Size"
-                    type="number"
-                    InputProps={{ inputProps: { min: 1 } }}
-                    defaultValue={size}
-                    onChange={(e) => setSize(parseInt(e.target.value))}
-                />
-            </Stack>
-            <Stack direction="row" spacing={2} mt={2}>
+                <Button onClick={play}>
+                    <ArrowForward></ArrowForward>
+                </Button>
+                <Button onClick={() => setPlaying(true)}>
+                    <PlayArrow></PlayArrow>
+                </Button>
+                <Button onClick={() => setPlaying(false)}>
+                    <Stop></Stop>
+                </Button>
                 <Button onClick={fillRandom}>Random</Button>
-                <TextField
-                    label="Percentage of squares filled"
-                    type="number"
-                    InputProps={{
-                        inputProps: { min: 0, max: 100 },
-                        endAdornment: <InputAdornment position="end">%</InputAdornment>
-                    }}
-                    defaultValue={randomFillPercent}
-                    onChange={(e) => setRandomFillPercent(parseInt(e.target.value))}
-                />
+                <Button onClick={() => clearBoard()}>Clear</Button>
+                <SimpleMenu
+                    size={size}
+                    sizeOnChange={setSize}
+                    randomFillPercent={randomFillPercent}
+                    setRandomFillPercent={setRandomFillPercent}
+                    playTime={playTime}
+                    setPlayTime={setPlayTime}
+                    ></SimpleMenu>
             </Stack>
+            <Stack direction="row" spacing={2} mt={2}></Stack>
             <Box width={500} mt={5} mb={5}>
-                <Typography>Time Between Moves</Typography>
-                <Slider
-                    min={50}
-                    max={1000}
-                    defaultValue={playTime}
-                    onChange={(_, val) => setPlayTime(val as number)}
-                    marks={marks}></Slider>
+                
             </Box>
             <Grid container id="board" spacing={0} columns={{ xs: size }} sx={{ width: 34 * size }}>
                 {dummyArr.map((row, rowIdx) =>
@@ -214,4 +197,3 @@ export const useInterval = (callback: any, delay: number | null): void => {
 }
 
 export default Board
-
