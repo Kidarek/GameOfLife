@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react"
-import { Button, Slider, TextField, Box, Stack, Grid, Typography } from "@material-ui/core"
+import { Button, Slider, TextField, Box, Stack, Grid, Typography, Tooltip, Icon } from "@material-ui/core"
+import HelpIcon from '@material-ui/icons/Help';
 
 import Square from "./Square"
 
@@ -130,6 +131,15 @@ function Board(): JSX.Element {
 
     return (
         <Box sx={{ alignItems: "center", width: "100vw", display: "flex", flexDirection: { md: "column" } }} mt={7}>
+            <Stack direction="row">
+                <Typography variant='h3' gutterBottom>Conway's Game of Life</Typography>
+                <Tooltip title="Click squares to set up a pattern then either press progress to step once or start">
+                    <Icon aria-label="Click squares to set up a pattern then either press progress to step once or start">
+                        <HelpIcon />
+                    </Icon>
+                </Tooltip>
+            </Stack>
+        
             <Stack direction="row" spacing={2}>
                 <Button onClick={play}>Progress</Button>
                 <Button onClick={() => setPlaying(true)}>Start</Button>
