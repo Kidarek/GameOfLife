@@ -174,7 +174,7 @@ function Board(): JSX.Element {
                 <TextField
                     label="Board Size"
                     type="number"
-                    InputProps={{ inputProps: { min: 1, max: 60 } }}
+                    InputProps={{ inputProps: { min: 1 } }}
                     defaultValue={size}
                     onChange={(e) => setSize(parseInt(e.target.value))}
                 />
