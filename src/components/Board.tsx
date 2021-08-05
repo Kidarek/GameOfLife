@@ -1,6 +1,17 @@
 import { useEffect, useState, useRef } from "react"
-import { Button, Slider, TextField, Box, Stack, Grid, Typography, Tooltip, Icon } from "@material-ui/core"
-import HelpIcon from '@material-ui/icons/Help';
+import {
+    Button,
+    Slider,
+    TextField,
+    Box,
+    Stack,
+    Grid,
+    Typography,
+    Tooltip,
+    Icon,
+    InputAdornment
+} from "@material-ui/core"
+import HelpIcon from "@material-ui/icons/Help"
 
 import Square from "./Square"
 
@@ -34,6 +45,7 @@ function Board(): JSX.Element {
     )
     const [isPlaying, setPlaying] = useState(false)
     const [playTime, setPlayTime] = useState(200)
+    const [randomFillPercent, setRandomFillPercent] = useState(50)
 
     useInterval(
         () => {
@@ -53,9 +65,7 @@ function Board(): JSX.Element {
     }, [size])
 
     const renderSquare = (y: number, x: number): JSX.Element => {
-        return (
-            <Square value={squares[y][x]} onClick={() => handleClick(y, x)} mouseOver={() => handleHover(y, x)} />
-        )
+        return <Square value={squares[y][x]} onClick={() => handleClick(y, x)} mouseOver={() => handleHover(y, x)} />
     }
 
     const handleHover = (y: number, x: number): void => {
@@ -129,26 +139,57 @@ function Board(): JSX.Element {
         return total
     }
 
+    const clearBoard = (): void => {
+        setSquares(
+            Array.from({ length: size }, () => {
+                return Array.from({ length: size }, () => 0)
+            })
+        )
+    }
+
+    const fillRandom = (): void => {
+        setSquares(
+            squares.map((row, rowIdx) => row.map((col, colIdx) => (getRandomInt(101) < randomFillPercent ? 1 : 0)))
+        )
+    }
+
     return (
         <Box sx={{ alignItems: "center", width: "100vw", display: "flex", flexDirection: { md: "column" } }} mt={7}>
             <Stack direction="row">
-                <Typography variant='h3' gutterBottom>Conway's Game of Life</Typography>
+                <Typography variant="h3" gutterBottom>
+                    Conway's Game of Life
+                </Typography>
                 <Tooltip title="Click squares to set up a pattern then either press progress to step once or start">
                     <Icon aria-label="Click squares to set up a pattern then either press progress to step once or start">
                         <HelpIcon />
                     </Icon>
                 </Tooltip>
             </Stack>
-        
+
             <Stack direction="row" spacing={2}>
                 <Button onClick={play}>Progress</Button>
                 <Button onClick={() => setPlaying(true)}>Start</Button>
                 <Button onClick={() => setPlaying(false)}>Stop</Button>
+                <Button onClick={() => clearBoard()}>Clear</Button>
                 <TextField
                     label="Board Size"
                     type="number"
+                    InputProps={{ inputProps: { min: 1, max: 60 } }}
                     defaultValue={size}
                     onChange={(e) => setSize(parseInt(e.target.value))}
+                />
+            </Stack>
+            <Stack direction="row" spacing={2} mt={2}>
+                <Button onClick={fillRandom}>Random</Button>
+                <TextField
+                    label="Percentage of squares filled"
+                    type="number"
+                    InputProps={{
+                        inputProps: { min: 0, max: 100 },
+                        endAdornment: <InputAdornment position="end">%</InputAdornment>
+                    }}
+                    defaultValue={randomFillPercent}
+                    onChange={(e) => setRandomFillPercent(parseInt(e.target.value))}
                 />
             </Stack>
             <Box width={500} mt={5} mb={5}>
@@ -161,7 +202,13 @@ function Board(): JSX.Element {
                     marks={marks}></Slider>
             </Box>
             <Grid container id="board" spacing={0} columns={{ xs: size }} sx={{ width: 34 * size }}>
-                {squares.map((row, rowIdx) => row.map((col, colIdx) => <Grid item xs={1} key={`${rowIdx}:${colIdx}`}>{renderSquare(rowIdx, colIdx)}</Grid>))}
+                {squares.map((row, rowIdx) =>
+                    row.map((col, colIdx) => (
+                        <Grid item xs={1} key={`${rowIdx}:${colIdx}`}>
+                            {renderSquare(rowIdx, colIdx)}
+                        </Grid>
+                    ))
+                )}
             </Grid>
         </Box>
     )
@@ -198,3 +245,7 @@ export const useInterval = (callback: any, delay: number | null): void => {
 }
 
 export default Board
+
+function getRandomInt(max: number): number {
+    return Math.floor(Math.random() * max)
+}
