@@ -1,4 +1,6 @@
 import ReactDOM from "react-dom"
+import { store } from './store'
+import { Provider } from 'react-redux'
 import "./index.css"
 import Game from './components/Game'
 
@@ -20,7 +22,9 @@ const darkTheme = createTheme({
 ReactDOM.render(
     <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <Game />
+        <Provider store={store}>
+            <Game />
+        </Provider>
     </ThemeProvider>,
     document.getElementById("root")
 )
