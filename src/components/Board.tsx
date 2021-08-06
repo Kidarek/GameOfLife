@@ -124,7 +124,7 @@ function Board(): JSX.Element {
     }
 
     return (
-        <Box sx={{ alignItems: "center", width: "100vw", display: "flex", flexDirection: { md: "column" } }} mt={7}>
+        <Box sx={{ alignItems: "center", width: "100vw", display: "flex", flexDirection: { xs: "column" } }} mt={7}>
             <Stack direction="row">
                 <Typography variant="h3" gutterBottom>
                     Conway's Game of Life
