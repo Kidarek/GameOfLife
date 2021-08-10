@@ -45,7 +45,7 @@ export default function SimpleMenu(props: MenuProps): JSX.Element {
                     defaultValue={props.randomFillPercent}
                     onChange={(e) => props.setRandomFillPercent(parseInt(e.target.value))}
                 />
-                <Stack direction="column" width="100%" ml={1}>
+                <Stack direction="column" width="100%" ml={1} mt={1}>
                     <Typography>Time Between Moves</Typography>
                     <Slider
                         min={50}
