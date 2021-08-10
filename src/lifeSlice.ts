@@ -5,8 +5,8 @@ export interface LifeState {
 }
 
 const initialState: LifeState = {
-    value: Array.from({ length: 10 }, () => {
-        return Array.from({ length: 10 }, () => 0)
+    value: Array.from({ length: 20 }, () => {
+        return Array.from({ length: 20 }, () => 0)
     })
 }
 

@@ -23,7 +23,7 @@ import { CellDiff, reset, step, randomizer } from "../lifeSlice"
 
 
 function Board(): JSX.Element {
-    const [size, setSize] = useState(10)
+    const [size, setSize] = useState(20)
     const [isPlaying, setPlaying] = useState(false)
     const [playTime, setPlayTime] = useState(200)
     const [randomFillPercent, setRandomFillPercent] = useState(50)
